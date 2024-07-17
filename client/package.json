@@ -1,0 +1,20 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "Aniruddha's Blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind": "npx tailwindcss -i ./input.css -o ./output.css --watch"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "amkhrjee",
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "daisyui": "^4.12.10",
+    "tailwindcss": "^3.4.4"
+  }
+}

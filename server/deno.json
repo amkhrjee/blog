@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@deno/gfm": "jsr:@deno/gfm@^0.8.2",
+    "@hono/hono": "jsr:@hono/hono@^4.4.9"
+  },
+  "tasks": {
+    "run": "deno run -A --watch server.ts"
+  }
+}

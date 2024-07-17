@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss
+    version="2.0"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+>
+    <channel>
+        <title>Aniruddha's Blog</title>
+        <link>https://blog.amkhrjee.xyz</link>
+        <description>Aniruddha's personal blog website.</description>
+        <language>en-US</language>
+        <atom:link href="https://blog.amkhrjee.xyz/rss.xml" rel="self" type="application/rss+xml" />
+
+        <!-- Will add stuff here soon  -->
+    </channel>
+</rss>
