@@ -4083,7 +4083,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
       const slug = parts[parts.length - 1];
       document
         .getElementById("blog")
-        .setAttribute("hx-get", `http://localhost:8000/posts/${slug}`);
+        .setAttribute("hx-get", `http://api:8000/posts/${slug}`);
       document.getElementById("blog").setAttribute("hx-trigger", "load");
     </script>
   </body>
