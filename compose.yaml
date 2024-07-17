@@ -1,0 +1,16 @@
+services:
+  web:
+    image: nginx:1.27.0
+    ports:
+      - 80:80
+      - 443:443
+    configs:
+      - source: nginx_conf
+        target: /etc/nginx/nginx.conf
+    volumes:
+      - ./client:/usr/share/nginx/html
+
+configs:
+  nginx_conf:
+    file: ./configs/nginx.conf
+
