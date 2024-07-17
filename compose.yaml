@@ -9,6 +9,10 @@ services:
         target: /etc/nginx/nginx.conf
     volumes:
       - ./client:/usr/share/nginx/html
+    depends_on:
+      - api
+      - posts_db
+      - newsletter_db
   api:
     image: denoland/deno:ubuntu-1.44.4
     ports:
@@ -17,14 +21,24 @@ services:
       - ./server:/server
     working_dir: /server
     command: deno task run
-  db:
+    depends_on:
+      - posts_db
+      - newsletter_db
+  posts_db:
     image: postgres:16.3-bullseye
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: verylongpassword
+    volumes:
+      - ./configs/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
-    environment:
-      
+  newsletter_db:
+    image: mongodb/mongodb-community-server:7.0.11-ubuntu2204
+    ports:
+      - 27017:27017
 
 configs:
   nginx_conf:
     file: ./configs/nginx.conf
-

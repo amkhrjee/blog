@@ -15,8 +15,8 @@ const env = await load();
 const client = new Client({
   user: "postgres",
   database: "postgres",
-  password: "test",
-  hostname: "172.18.0.1",
+  password: "verylongpassword",
+  hostname: "posts_db",
   port: 5432,
 });
 await client.connect();
