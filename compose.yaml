@@ -9,6 +9,20 @@ services:
         target: /etc/nginx/nginx.conf
     volumes:
       - ./client:/usr/share/nginx/html
+  api:
+    image: denoland/deno:ubuntu-1.44.4
+    ports:
+      - 8000:8000
+    volumes:
+      - ./server:/server
+    working_dir: /server
+    command: deno task run
+  db:
+    image: postgres:16.3-bullseye
+    ports:
+      - 5432:5432
+    environment:
+      
 
 configs:
   nginx_conf:
