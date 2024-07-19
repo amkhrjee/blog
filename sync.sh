@@ -1,0 +1,1 @@
+rsync -rv -e "ssh -i ./sshkey.pem" . ubuntu@13.126.158.61:/home/ubuntu/blogmono

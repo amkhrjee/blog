@@ -205,9 +205,9 @@ app.get("/tags", async (c: Context) => {
       const mObserver = new MutationObserver(async () => {
       let response;
         if (active_tags.size > 0)
-          response = await fetch(\`http://api:8000/tags/\${[...active_tags].join("+")}\`);
+          response = await fetch(\`http://localhost:8000/tags/\${[...active_tags].join("+")}\`);
         else
-          response = await fetch("http://api:8000/notags");
+          response = await fetch("http://localhost:8000/notags");
         const body = await response.text();
         posts.innerHTML = body;        
       });
