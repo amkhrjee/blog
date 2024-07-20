@@ -24,14 +24,6 @@ services:
     depends_on:
       - posts_db
       - newsletter_db
-  api_tls_proxy:
-    image: caddy:latest
-    ports:
-      - 4000:4000
-    volumes:
-      - ./configs/Caddyfile:/etc/caddy/Caddyfile
-    depends_on:
-      - api
   posts_db:
     image: postgres:16.3-bullseye
     environment:

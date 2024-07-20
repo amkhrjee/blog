@@ -1,8 +1,0 @@
-blog.amkhrjee.xyz:4000 {
-	:4000
-	reverse_proxy http://api:8000
-}
-
-localhost:4000 {
-	reverse_proxy http://api:8000
-}
