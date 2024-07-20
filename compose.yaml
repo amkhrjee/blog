@@ -4,6 +4,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 4000:4000
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf
