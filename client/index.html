@@ -80,8 +80,9 @@
   <div>
     <div class="divider">Latest Posts</div>
     <!-- Cards -->
-    <div class="not-prose text-sm" hx-get="https://blog.amkhrjee.xyz:4000/latest" hx-trigger="every 1s"
-      hx-swap="#latest-posts">
+    <!-- <div class="not-prose text-sm" hx-get="https://blog.amkhrjee.xyz:4000/latest" hx-trigger="every 1s"
+      hx-swap="#latest-posts"> -->
+    <div class="not-prose text-sm" hx-get="http://localhost:8000/latest" hx-trigger="every 1s" hx-swap="#latest-posts">
       <div hx-boost="true">
         <!-- Skeletons -->
         <div id="latest-posts" class="p-6">

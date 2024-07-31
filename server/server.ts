@@ -99,34 +99,26 @@ app.get("/latest", async (c: Context) => {
   console.log("Fetching latest posts...");
   // deno-lint-ignore no-explicit-any
   const result: any = await client.queryObject(
-    "SELECT title, tags, summary, slug FROM posts ORDER BY last_modified DESC LIMIT 5"
+    "SELECT title, summary, slug FROM posts ORDER BY last_modified DESC LIMIT 5"
   );
   console.log("Fetched rows from posts table");
   let html = "";
-  const rows: { title: string; tags: string; summary: string; slug: string }[] =
-    result.rows;
+  const rows: { title: string; summary: string; slug: string }[] = result.rows;
 
-  for (const { title, tags, summary, slug } of rows) {
-    const tags_list = tags.substring(1, tags.length - 1).split(",");
+  for (const { title, summary, slug } of rows) {
     html += `
-    <div class="card mx-4 shadow-md">
+    <div class="card mx-2 shadow-md">
       <div class="card-body">
         <div class="card-title flex-col items-start">
-          <h2 class="font-sans">${title}</h2>
+          <h2><a class="link link-primary" href="/posts/${slug}">${title}</a></h2>
           <div class="flex gap-1 overflow-x-auto w-full text-sm font-mono">
     `;
-    for (const tag of tags_list) {
-      html += `<div class="badge">${tag}</div>`;
-    }
     html += `
           </div>
         </div>
       <p>
         ${summary} 
       </p>
-      <div class="card-actions justify-end">
-        <a href="/posts/${slug}" class="cursor-pointer link-primary">Read more</a>
-      </div>
       </div>
     </div>
       <br/>
