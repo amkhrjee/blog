@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html data-theme="sunset" lang="en">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aniruddha's Blog</title>
+  <link rel="icon" type="image/x-icon" href="Memo.ico">
+  <meta description="The blog website for Aniruddha Mukherjee.">
   <!-- Tailwind Output -->
   <link rel="stylesheet" href="./output.css" />
   <!-- HTMX -->
@@ -30,15 +32,15 @@
   <div class="navbar bg-base-100 sticky top-0 z-20 justify-around md:justify-between">
     <a class="text-2xl lg:text-3xl font-mono font-bold text-primary" href="/">Aniruddha Mukherjee</a>
     <div class="md:flex gap-4 hidden">
-      <a class="link link-secondary">Explore by tags</a>
-      <a class="link link-secondary">View all posts</a>
+      <a class="link link-secondary" href="/tags">Explore by tags</a>
+      <a class="link link-secondary" href="/posts">View all posts</a>
     </div>
     <div class="dropdown dropdown-end md:hidden">
       <div tabindex="0" role="button" class="btn btn-ghost m-1"><span class="material-symbols-outlined">more_vert</span>
       </div>
       <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-        <li><a>Explore by tags</a></li>
-        <li><a>View all posts</a></li>
+        <li><a href="/tags">Explore by tags</a></li>
+        <li><a href="/posts">View all posts</a></li>
       </ul>
     </div>
   </div>
@@ -46,7 +48,7 @@
   <div id="blog"></div>
   <!-- Footer -->
   <br />
-  <div class="px-6 prose">
+  <div class="px-4 prose">
     <p>
       Subscribe to <a href="/#newsletter-form">Newsletter</a> or
       <a href="/rss.xml">RSS</a>
@@ -70,8 +72,8 @@
     const slug = parts[parts.length - 1];
     document
       .getElementById("blog")
-      // .setAttribute("hx-get", `https://blog.amkhrjee.xyz:4000/posts/${slug}`);
-      .setAttribute("hx-get", `http://localhost:8000/posts/refs-under-the-hood`);
+      .setAttribute("hx-get", `https://blog.amkhrjee.xyz:4000/posts/${slug}`);
+    // .setAttribute("hx-get", `http://localhost:8000/posts/refs-under-the-hood`);
     document.getElementById("blog").setAttribute("hx-trigger", "load");
   </script>
 </body>

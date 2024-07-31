@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html data-theme="sunset" lang="en">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aniruddha's Blog</title>
+  <link rel="icon" type="image/x-icon" href="Memo.ico">
+  <meta description="The blog website for Aniruddha Mukherjee.">
   <!-- HTMX -->
   <script src="./htmx.min.js"></script>
 
@@ -33,22 +35,25 @@
   <div class="navbar bg-base-100 sticky top-0 z-20 justify-around md:justify-between">
     <a class="text-2xl lg:text-3xl font-mono font-bold text-primary" href="/">Aniruddha Mukherjee</a>
     <div class="md:flex gap-4 hidden">
-      <a class="link link-secondary">Explore by tags</a>
+      <a class="link link-secondary" href="/tags">Explore by tags</a>
       <a class="link link-secondary">View all posts</a>
     </div>
     <div class="dropdown dropdown-end md:hidden">
       <div tabindex="0" role="button" class="btn btn-ghost m-1"><span class="material-symbols-outlined">more_vert</span>
       </div>
       <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-        <li><a>Explore by tags</a></li>
-        <li><a>View all posts</a></li>
+        <li><a href="/tags">Explore by tags</a></li>
+        <li><a href="/posts">View all posts</a></li>
       </ul>
     </div>
   </div>
-  <div class="container px-6">
+  <br />
+
+  <div class="px-6">
     <h3 class="text-xl text-center">Sorry to see you go... 🤧</h3>
     <br />
-    <form action="https://blog.amkhrjee.xyz:4000/newsletter/unsub" method="post">
+
+    <form class="flex flex-col items-center" action="https://blog.amkhrjee.xyz:4000/newsletter/unsub" method="post">
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">Enter the email used for subscription</span>
