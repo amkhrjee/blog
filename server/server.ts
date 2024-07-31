@@ -131,6 +131,16 @@ app.get("/latest", async (c: Context) => {
   return c.html(html, 286);
 });
 
+app.use("/latest/json", cors());
+app.get("/latest/json", async (c: Context) => {
+  // deno-lint-ignore no-explicit-any
+  const result: any = await client.queryObject(
+    "SELECT title, summary, slug FROM posts ORDER BY last_modified DESC LIMIT 5"
+  );
+  const rows: { title: string; summary: string; slug: string }[] = result.rows;
+  return c.json(rows);
+});
+
 app.use("/posts/*", cors());
 app.get("/posts/:slug", async (c: Context) => {
   const slug = c.req.param("slug");
