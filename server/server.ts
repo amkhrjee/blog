@@ -155,8 +155,8 @@ app.get("/posts/:slug", async (c: Context) => {
   let html = `
     <!-- Blog Content -->
     <style>${CSS}</style>
-    <div class="container prose px-6">
-      <h1>${row.title}</h1>
+    <div class="prose lg:prose-xl px-4 mt-4">
+      <h2 class="text-secondary">${row.title}</h2>
       <div class="flex gap-2 flex-wrap w-full text-sm font-mono">
       `;
   for (const each_tag of tags_list) {
@@ -164,13 +164,17 @@ app.get("/posts/:slug", async (c: Context) => {
   }
   html += `  
       </div>
-      <div class="font-serif">
+      <div>
         ${markdownHTML}
       </div>
     </div>
     <!-- Date -->
-    <div class="px-6">
-      <p>Posted on: 23 Jun 2024</p>
+    <div class="px-4">
+      <p>Posted on: ${row.last_modified.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })}</p>
     </div>
   `;
 
