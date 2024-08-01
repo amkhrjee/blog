@@ -2,7 +2,11 @@ name: deploy to AWS LightSail
 on: [push]
 jobs:
   deploy-to-server
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
+      - name: setting up
+        with:
+        env:
+          mailgun_api_key: ${{secrets.MAILGUN_API_KEY}}
       - uses: actions/checkout@v4
-      - run: echo 'Hello'
+      - run: sudo docker compose up

@@ -10,6 +10,7 @@ services:
         target: /etc/nginx/nginx.conf
     volumes:
       - ./client:/usr/share/nginx/html
+      - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - api
       - posts_db
@@ -33,12 +34,17 @@ services:
       POSTGRES_PASSWORD: verylongpassword
     volumes:
       - ./configs/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
   newsletter_db:
     image: mongodb/mongodb-community-server:7.0.11-ubuntu2204
     ports:
       - 27017:27017
+
+volumes:
+  postgres_data:
+
 
 configs:
   nginx_conf:
