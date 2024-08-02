@@ -7,20 +7,21 @@ import { MongoClient, ServerApiVersion } from "npm:mongodb@6.8.0";
 import formData from "npm:form-data@4.0.0";
 import Mailgun from "npm:mailgun.js@10.2.1";
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
-import { S3Client } from "@bradenmacdonald/s3-lite-client/";
-
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+} from "https://esm.sh/@aws-sdk/client-s3@3.622.0";
 // Environment variables
 const env = await load();
+const BUCKET_NAME = "amkhrjee-blog-images";
 
 const s3client = new S3Client({
-  endPoint: "s3.ap-south-1.amazonaws.com",
-  port: 443,
-  useSSL: true,
   region: "ap-south-1",
-  bucket: "amkhrjee-blog-images",
-  pathStyle: false,
-  accessKey: env["S3_ACCESS_KEY"],
-  secretKey: env["S3_SECRET_KEY"],
+  credentials: {
+    accessKeyId: env["S3_ACCESS_KEY"],
+    secretAccessKey: env["S3_SECRET_KEY"],
+  },
 });
 
 // PostgreSQL for blog posts
@@ -70,9 +71,14 @@ app.post("/", async (c: Context) => {
   const fileName = c.req.header("Content-Disposition");
   console.log(`File Name: ${fileName}`);
   const arrayBuff = await c.req.arrayBuffer();
-  console.log("Array Buffer Received. Writing to disk.");
+  console.log("Array Buffer Received.");
   try {
-    await s3client.putObject(fileName!, new Uint8Array(arrayBuff));
+    const putCommand = new PutObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: fileName,
+      Body: new Uint8Array(arrayBuff),
+    });
+    await s3client.send(putCommand);
     console.log(`image ${fileName} saved to S3 bucket`);
   } catch (err) {
     console.error(err);
@@ -103,8 +109,17 @@ app.get("/image/:path", async (c: Context) => {
   console.log("RECEIVED GET REQUEST FOR IMAGE");
   const image = c.req.param("path");
   try {
-    const result = await s3client.getObject(image);
-    return c.body(result.body);
+    // const result = await s3client.getObject(image);
+    const result = await s3client.send(
+      new GetObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: image,
+      })
+    );
+    return stream(
+      c,
+      async (stream) => await stream.pipe(result.Body?.transformToWebStream()!)
+    );
   } catch (err) {
     console.log(`Could not read ${image} for ${err} from s3`);
     try {
