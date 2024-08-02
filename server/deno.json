@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@bradenmacdonald/s3-lite-client": "jsr:@bradenmacdonald/s3-lite-client@^0.7.6",
     "@deno/gfm": "jsr:@deno/gfm@^0.8.2",
     "@hono/hono": "jsr:@hono/hono@^4.4.9"
   },

@@ -7,15 +7,27 @@ import { MongoClient, ServerApiVersion } from "npm:mongodb@6.8.0";
 import formData from "npm:form-data@4.0.0";
 import Mailgun from "npm:mailgun.js@10.2.1";
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
+import { S3Client } from "@bradenmacdonald/s3-lite-client/";
 
 // Environment variables
 const env = await load();
+
+const s3client = new S3Client({
+  endPoint: "s3.ap-south-1.amazonaws.com",
+  port: 443,
+  useSSL: true,
+  region: "ap-south-1",
+  bucket: "amkhrjee-blog-images",
+  pathStyle: false,
+  accessKey: env["S3_ACCESS_KEY"],
+  secretKey: env["S3_SECRET_KEY"],
+});
 
 // PostgreSQL for blog posts
 const client = new Client({
   user: "postgres",
   database: "postgres",
-  password: "verylongpassword",
+  password: env["POSTGRES_PASSWORD"],
   hostname: "posts_db",
   port: 5432,
 });
@@ -60,15 +72,25 @@ app.post("/", async (c: Context) => {
   const arrayBuff = await c.req.arrayBuffer();
   console.log("Array Buffer Received. Writing to disk.");
   try {
-    await Deno.writeFile(`./images/${fileName}`, new Uint8Array(arrayBuff));
-    console.log("Image saved to disk.");
+    await s3client.putObject(fileName!, new Uint8Array(arrayBuff));
+    console.log(`image ${fileName} saved to S3 bucket`);
   } catch (err) {
-    {
-      console.error("Failed to write image to disk.");
-      return c.json({
-        status: "failure",
-        error: err,
-      });
+    console.error(err);
+    console.error(
+      "Failed to write image to s3 bucket. trying to write to disk."
+    );
+    try {
+      // Save to disk as backup
+      await Deno.writeFile(`./images/${fileName}`, new Uint8Array(arrayBuff));
+      console.log("Image saved to disk.");
+    } catch (err) {
+      {
+        console.error("Failed to write image to disk.");
+        return c.json({
+          status: "failure",
+          error: err,
+        });
+      }
     }
   }
 
@@ -80,17 +102,21 @@ app.post("/", async (c: Context) => {
 app.get("/image/:path", async (c: Context) => {
   console.log("RECEIVED GET REQUEST FOR IMAGE");
   const image = c.req.param("path");
-  let file;
   try {
-    file = await Deno.open("./images/" + image, { read: true });
+    const result = await s3client.getObject(image);
+    return c.body(result.body);
   } catch (err) {
-    console.log(`Could not read ${image} for ${err}`);
+    console.log(`Could not read ${image} for ${err} from s3`);
+    try {
+      console.log("trying to read fromm disk...");
+      const file = await Deno.open("./images/" + image, { read: true });
+      const readableStream = file.readable;
+      return stream(c, async (stream) => await stream.pipe(readableStream));
+    } catch (err) {
+      console.error("reading image from disk failed:" + err);
+    }
     return c.text("Resource not found", 404);
   }
-
-  const readableStream = file.readable;
-
-  return stream(c, async (stream) => await stream.pipe(readableStream));
 });
 
 app.use("/latest", cors());

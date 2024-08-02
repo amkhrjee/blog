@@ -2,12 +2,14 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "jsr:@bradenmacdonald/s3-lite-client@^0.7.6": "jsr:@bradenmacdonald/s3-lite-client@0.7.6",
       "jsr:@deno/gfm@^0.8.2": "jsr:@deno/gfm@0.8.2",
       "jsr:@denosaurs/emoji@0.3": "jsr:@denosaurs/emoji@0.3.0",
       "jsr:@hono/hono": "jsr:@hono/hono@4.4.9",
       "jsr:@hono/hono@^4.4.9": "jsr:@hono/hono@4.4.9",
       "jsr:@std/bytes@^1.0.0-rc.3": "jsr:@std/bytes@1.0.0",
       "jsr:@std/io": "jsr:@std/io@0.224.2",
+      "jsr:@std/io@^0.224": "jsr:@std/io@0.224.2",
       "npm:form-data@4.0.0": "npm:form-data@4.0.0",
       "npm:github-slugger@^2.0": "npm:github-slugger@2.0.0",
       "npm:he@^1.2": "npm:he@1.2.0",
@@ -22,6 +24,12 @@
       "npm:sanitize-html@^2.11": "npm:sanitize-html@2.13.0"
     },
     "jsr": {
+      "@bradenmacdonald/s3-lite-client@0.7.6": {
+        "integrity": "2b5976dca95d207dc88e23f9807e3eecbc441b0cf547dcda5784afe6668404d1",
+        "dependencies": [
+          "jsr:@std/io@^0.224"
+        ]
+      },
       "@deno/gfm@0.8.2": {
         "integrity": "a7528367cbd954a2d0de316bd0097ee92f06d2cb66502c8574de133ed223424f",
         "dependencies": [
@@ -538,6 +546,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@bradenmacdonald/s3-lite-client@^0.7.6",
       "jsr:@deno/gfm@^0.8.2",
       "jsr:@hono/hono@^4.4.9"
     ]
