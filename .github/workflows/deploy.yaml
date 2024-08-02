@@ -9,4 +9,4 @@ jobs:
         env:
           mailgun_api_key: ${{secrets.MAILGUN_API_KEY}}
       - uses: actions/checkout@v4
-      - run: sudo docker compose up
+      - run: 

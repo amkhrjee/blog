@@ -402,7 +402,7 @@ app.post("/newsletter/unsub", async (c: Context) => {
 
   return c.html(
     `
-    <div style="padding: 4rem;font-family: sans-serif;">
+    <div style="padding: 4rem;font-family: sans-serif; font-size: 2rem;">
       <h1>You've been unsubscribed!</h1>
       <h2>Go back to <a href='https://blog.amkhrjee.xyz/'>Home</a></h2>
     </div>
@@ -441,7 +441,7 @@ app.get("/newsletter/newpost", async (c) => {
   const post: [title: string, content: string] = result.rows[0];
   const [title, content] = post;
   const markdown_html = render(content, {
-    baseUrl: "",
+    baseUrl: "https://blog.amkhrjee.xyz",
   });
 
   emails.forEach((email) => {
